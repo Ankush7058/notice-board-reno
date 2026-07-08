@@ -1,5 +1,5 @@
 export interface Notice {
-  id: number;  // Changed from string to number
+  id: number;
   title: string;
   body: string;
   category: 'Exam' | 'Event' | 'General';

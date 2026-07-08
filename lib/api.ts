@@ -8,7 +8,7 @@ export async function fetchNotices(): Promise<Notice[]> {
   return res.json();
 }
 
-export async function fetchNotice(id: number): Promise<Notice> {  // Changed from string
+export async function fetchNotice(id: number): Promise<Notice> {
   const res = await fetch(`${API_BASE}/${id}`);
   if (!res.ok) throw new Error('Failed to fetch notice');
   return res.json();
@@ -26,7 +26,7 @@ export async function createNotice(data: FormData): Promise<Notice> {
   return res.json();
 }
 
-export async function updateNotice(id: number, data: FormData): Promise<Notice> {  // Changed from string
+export async function updateNotice(id: number, data: FormData): Promise<Notice> {
   const res = await fetch(`${API_BASE}/${id}`, {
     method: 'PUT',
     body: data,
@@ -38,7 +38,7 @@ export async function updateNotice(id: number, data: FormData): Promise<Notice> 
   return res.json();
 }
 
-export async function deleteNotice(id: number): Promise<void> {  // Changed from string
+export async function deleteNotice(id: number): Promise<void> {
   const res = await fetch(`${API_BASE}/${id}`, {
     method: 'DELETE',
   });

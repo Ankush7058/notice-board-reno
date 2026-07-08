@@ -53,7 +53,6 @@ export default function NoticeBoardPage() {
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-violet-50">
-        {/* Background Blur */}
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-violet-200/30 blur-3xl" />
           <div className="absolute right-0 top-40 h-96 w-96 rounded-full bg-fuchsia-200/20 blur-3xl" />
@@ -63,37 +62,23 @@ export default function NoticeBoardPage() {
         <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
           <Header />
 
-          {/* Stats */}
           <section className="mt-10 grid gap-6 md:grid-cols-3">
             <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lg backdrop-blur">
-              <p className="text-sm font-medium text-slate-500">
-                Total Notices
-              </p>
-              <h2 className="mt-3 text-4xl font-bold text-slate-900">
-                {notices.length}
-              </h2>
+              <p className="text-sm font-medium text-slate-500">Total Notices</p>
+              <h2 className="mt-3 text-4xl font-bold text-slate-900">{notices.length}</h2>
             </div>
 
             <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lg backdrop-blur">
-              <p className="text-sm font-medium text-slate-500">
-                Urgent Notices
-              </p>
-              <h2 className="mt-3 text-4xl font-bold text-red-500">
-                {urgentCount}
-              </h2>
+              <p className="text-sm font-medium text-slate-500">Urgent Notices</p>
+              <h2 className="mt-3 text-4xl font-bold text-red-500">{urgentCount}</h2>
             </div>
 
             <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lg backdrop-blur">
-              <p className="text-sm font-medium text-slate-500">
-                Categories
-              </p>
-              <h2 className="mt-3 text-4xl font-bold text-violet-600">
-                {uniqueCategories}
-              </h2>
+              <p className="text-sm font-medium text-slate-500">Categories</p>
+              <h2 className="mt-3 text-4xl font-bold text-violet-600">{uniqueCategories}</h2>
             </div>
           </section>
 
-          {/* Cards */}
           <section className="mt-12">
             {loading ? (
               <div className="flex h-80 items-center justify-center">
@@ -101,12 +86,8 @@ export default function NoticeBoardPage() {
               </div>
             ) : notices.length === 0 ? (
               <div className="rounded-3xl border border-dashed border-slate-300 bg-white py-24 text-center shadow-sm">
-                <h2 className="text-3xl font-bold text-slate-900">
-                  No Notices Yet
-                </h2>
-                <p className="mt-3 text-slate-500">
-                  Click on Add Notice to create your first announcement.
-                </p>
+                <h2 className="text-3xl font-bold text-slate-900">No Notices Yet</h2>
+                <p className="mt-3 text-slate-500">Click on Add Notice to create your first announcement.</p>
               </div>
             ) : (
               <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">

@@ -3,7 +3,7 @@ import { Notice } from '@/types/notice';
 
 interface NoticeCardProps {
   notice: Notice;
-   onDelete: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 export default function NoticeCard({ notice, onDelete }: NoticeCardProps) {
@@ -25,7 +25,8 @@ export default function NoticeCard({ notice, onDelete }: NoticeCardProps) {
     <div className={`bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border-l-4 ${isUrgent ? 'border-red-500' : 'border-blue-500'} flex flex-col`}>
       {notice.image && (
         <div className="h-48 overflow-hidden bg-gray-100">
-          {/* eslint-disable-next-line @next/next/no-img-element */}`n            <img
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={notice.image}
             alt={notice.title}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
