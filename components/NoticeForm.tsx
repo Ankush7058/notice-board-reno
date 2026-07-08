@@ -206,7 +206,7 @@ export default function NoticeForm({ notice, isEdit = false }: NoticeFormProps) 
             </div>
           ) : (
             <div className="relative rounded-xl overflow-hidden border border-gray-200">
-              <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}`n              <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover" />
               <button
                 type="button"
                 onClick={removeImage}
