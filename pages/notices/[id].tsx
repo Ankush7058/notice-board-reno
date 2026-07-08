@@ -20,7 +20,7 @@ export default function EditNotice() {
       return;
     }
     
-    fetchNotice(numericId.toString())
+    fetchNotice(numericId)
       .then(data => setNotice(data))
       .catch(err => {
         console.error(err);
