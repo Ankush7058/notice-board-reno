@@ -1,97 +1,188 @@
 # Notice Board
 
-A full-stack Notice Board application built with Next.js (Pages Router), Prisma, and MySQL. Supports creating, reading, updating, and deleting notices with server-side validation and responsive design.
+A full-stack **Notice Board** application built with **Next.js (Pages
+Router)**, **Prisma ORM**, and **TiDB Cloud (MySQL-compatible)**. The
+application supports complete **CRUD (Create, Read, Update, Delete)**
+operations with server-side validation, responsive UI, and deployment on
+Vercel.
 
-## Features
+------------------------------------------------------------------------
 
-- **Create Notice**: Add new notices with title, body, category, priority, publish date, and optional image
-- **Read Notices**: View all notices as responsive cards with stats dashboard
-- **Update Notice**: Edit existing notices with pre-filled form
-- **Delete Notice**: Remove notices with confirmation dialog
-- **Urgent Priority**: Urgent notices automatically sort to the top with a red badge
-- **Server-Side Validation**: All input validation runs on the API, not just the browser
-- **Responsive Design**: Works on mobile phones and desktop screens
-- **Image Upload**: Optional image attachment for notices (bonus feature)
+## 🚀 Features
 
-## Tech Stack
+-   ✅ Create new notices
+-   ✅ View notices as responsive cards
+-   ✅ Edit existing notices
+-   ✅ Delete notices with confirmation dialog
+-   ✅ Urgent notices displayed with a red badge
+-   ✅ Urgent-first ordering from the database (Prisma query)
+-   ✅ Server-side validation
+-   ✅ Responsive design (Mobile & Desktop)
+-   ✅ Optional image upload (Bonus)
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 15 (Pages Router) |
-| Database Access | Prisma ORM |
-| Database | TiDB Cloud (MySQL-compatible, free tier) |
-| Hosting | Vercel (Hobby tier) |
-| Styling | Tailwind CSS v3 |
-| Language | TypeScript |
+------------------------------------------------------------------------
 
-## How to Run Locally
+## 🛠 Tech Stack
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/notice-board-reno.git
-   cd notice-board-reno
-Install dependencies
-bash
+  Layer          Technology
+  -------------- -------------------------------
+  Framework      Next.js 15 (Pages Router)
+  Language       TypeScript
+  Database ORM   Prisma
+  Database       TiDB Cloud (MySQL-compatible)
+  Hosting        Vercel (Hobby Tier)
+  Styling        Tailwind CSS
+
+------------------------------------------------------------------------
+
+## 📦 Getting Started
+
+### 1. Clone the Repository
+
+``` bash
+git clone https://github.com/Ankush7058/notice-board-reno.git
+cd notice-board-reno
+```
+
+### 2. Install Dependencies
+
+``` bash
 npm install
-Set up environment variables
-Create a .env file in the root directory
-Add your database connection string:
-plain
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+``` env
 DATABASE_URL="mysql://username:password@host:port/database?sslaccept=strict"
-Generate Prisma client and push schema
-bash
+```
+
+### 4. Generate Prisma Client
+
+``` bash
 npx prisma generate
+```
+
+### 5. Push the Database Schema
+
+``` bash
 npx prisma db push
-Start the development server
-bash
+```
+
+### 6. Run the Development Server
+
+``` bash
 npm run dev
-Open in browser
-Navigate to http://localhost:3000
-Project Structure
-plain
-├── components/          # React components
-│   ├── ConfirmDialog.tsx  # Delete confirmation modal
-│   ├── Header.tsx         # Navigation header
-│   ├── NoticeCard.tsx     # Notice display card
-│   └── NoticeForm.tsx     # Create/Edit form
-├── lib/                   # Utility functions
-│   ├── api.ts             # Frontend API calls
-│   ├── prisma.ts          # Prisma client instance
-│   ├── utils.ts           # Helper utilities
-│   └── validation.ts      # Server-side validation
-├── pages/                 # Next.js Pages Router
-│   ├── api/notices/       # API routes
-│   │   ├── index.ts       # GET all, POST create
-│   │   └── [id].ts        # GET one, PUT update, DELETE
-│   ├── notices/           # Page routes
-│   │   ├── new.tsx        # Create notice page
-│   │   └── [id].tsx       # Edit notice page
-│   ├── _app.tsx           # App wrapper
-│   └── index.tsx          # Home page (list notices)
-├── prisma/
-│   └── schema.prisma      # Database schema
-├── public/uploads/        # Uploaded images
-├── styles/
-│   └── globals.css        # Global styles
-└── types/
-    └── notice.ts          # TypeScript types
-API Endpoints
-Table
-Method	Endpoint	Description
-GET	/api/notices	List all notices (Urgent first)
-POST	/api/notices	Create a new notice
-GET	/api/notices/:id	Get a single notice
-PUT	/api/notices/:id	Update an existing notice
-DELETE	/api/notices/:id	Delete a notice
-One Thing to Improve With More Time
-With more time, I would add pagination for the notice list to handle large datasets efficiently, and implement a rich text editor (like Quill or Tiptap) for the notice body instead of a plain textarea. This would allow formatting, bullet points, and embedded links in notices.
-Where and How AI Was Used
-AI (ChatGPT/Claude) was used to:
-Help structure the project architecture and file organization
-Generate boilerplate code for components and API routes
-Debug Tailwind CSS v4 compatibility issues and configure v3
-Fix Prisma schema compatibility with TiDB Cloud (MySQL)
-Review and explain Next.js Pages Router patterns
-All code was reviewed, tested, and modified by me to ensure correctness, security, and full understanding of how each part works.
-Live Demo
-View Live Application
+```
+
+Open:
+
+    http://localhost:3000
+
+------------------------------------------------------------------------
+
+## 📁 Project Structure
+
+``` text
+.
+├── components
+│   ├── ConfirmDialog.tsx
+│   ├── Header.tsx
+│   ├── NoticeCard.tsx
+│   └── NoticeForm.tsx
+├── lib
+│   ├── api.ts
+│   ├── prisma.ts
+│   ├── utils.ts
+│   └── validation.ts
+├── pages
+│   ├── api
+│   │   └── notices
+│   │       ├── index.ts
+│   │       └── [id].ts
+│   ├── notices
+│   │   ├── new.tsx
+│   │   └── [id].tsx
+│   ├── _app.tsx
+│   └── index.tsx
+├── prisma
+│   └── schema.prisma
+├── public
+├── styles
+│   └── globals.css
+├── types
+│   └── notice.ts
+└── README.md
+```
+
+------------------------------------------------------------------------
+
+## 🔌 API Endpoints
+
+  Method   Endpoint             Description
+  -------- -------------------- --------------------------------
+  GET      `/api/notices`       Get all notices (Urgent first)
+  POST     `/api/notices`       Create a new notice
+  GET      `/api/notices/:id`   Get a single notice
+  PUT      `/api/notices/:id`   Update a notice
+  DELETE   `/api/notices/:id`   Delete a notice
+
+------------------------------------------------------------------------
+
+## ✨ Assignment Requirements Covered
+
+-   Full CRUD functionality
+-   Next.js Pages Router
+-   Prisma ORM
+-   Hosted MySQL-compatible database (TiDB Cloud)
+-   API routes with correct HTTP methods
+-   Server-side validation
+-   Responsive UI
+-   Delete confirmation dialog
+-   Urgent badge and urgent-first ordering
+-   Public deployment on Vercel
+
+------------------------------------------------------------------------
+
+## 🔮 One Thing I Would Improve
+
+Given more time, I would add:
+
+-   Pagination for large datasets
+-   Search and filtering
+-   Rich text editor (Tiptap/Quill)
+-   Image optimization
+-   Authentication & role-based access
+-   Unit and integration tests
+
+------------------------------------------------------------------------
+
+## 🤖 AI Usage
+
+AI tools (ChatGPT) were used to:
+
+-   Discuss application architecture
+-   Explain Next.js Pages Router concepts
+-   Generate boilerplate code
+-   Assist with Prisma configuration
+-   Help debug UI and styling issues
+-   Review code quality and suggest improvements
+
+All generated code was reviewed, modified, integrated, tested, and
+verified by me before submission.
+
+------------------------------------------------------------------------
+
+## 🌐 Live Demo
+
+**Live URL:** https://YOUR-VERCEL-URL.vercel.app
+
+------------------------------------------------------------------------
+
+## 📂 GitHub Repository
+
+**Repository:** https://github.com/Ankush7058/notice-board-reno.git
+
+------------------------------------------------------------------------
+

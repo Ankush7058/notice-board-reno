@@ -37,8 +37,7 @@ export async function updateNotice(id: string, data: FormData): Promise<Notice> 
   }
   return res.json();
 }
-
-export async function deleteNotice(id: string): Promise<void> {
+export async function deleteNotice(id: number): Promise<void> {  // Changed from string
   const res = await fetch(`${API_BASE}/${id}`, {
     method: 'DELETE',
   });

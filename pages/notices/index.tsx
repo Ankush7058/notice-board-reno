@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import NoticeCard from "../../components/NoticeCard";
+import ConfirmDialog from "../../components/ConfirmDialog";
 import { Notice } from "../../types/notice";
 
 export default function NoticeBoardPage() {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/notices")
@@ -18,6 +20,31 @@ export default function NoticeBoardPage() {
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleDeleteClick = (id: number) => {
+    setDeleteId(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deleteId === null) return;
+    try {
+      const res = await fetch(`/api/notices/${deleteId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete notice");
+      setNotices((prev) => prev.filter((n) => n.id !== deleteId));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setDeleteId(null);
+    }
+  };
+
+  const urgentCount = notices.filter(
+    (item) => item.priority === "Urgent"
+  ).length;
+
+  const uniqueCategories = [...new Set(notices.map((n) => n.category))].length;
 
   return (
     <>
@@ -42,7 +69,6 @@ export default function NoticeBoardPage() {
               <p className="text-sm font-medium text-slate-500">
                 Total Notices
               </p>
-
               <h2 className="mt-3 text-4xl font-bold text-slate-900">
                 {notices.length}
               </h2>
@@ -52,13 +78,8 @@ export default function NoticeBoardPage() {
               <p className="text-sm font-medium text-slate-500">
                 Urgent Notices
               </p>
-
               <h2 className="mt-3 text-4xl font-bold text-red-500">
-                {
-                  notices.filter(
-                    (item) => item.priority === "URGENT"
-                  ).length
-                }
+                {urgentCount}
               </h2>
             </div>
 
@@ -66,9 +87,8 @@ export default function NoticeBoardPage() {
               <p className="text-sm font-medium text-slate-500">
                 Categories
               </p>
-
               <h2 className="mt-3 text-4xl font-bold text-violet-600">
-                3
+                {uniqueCategories}
               </h2>
             </div>
           </section>
@@ -84,7 +104,6 @@ export default function NoticeBoardPage() {
                 <h2 className="text-3xl font-bold text-slate-900">
                   No Notices Yet
                 </h2>
-
                 <p className="mt-3 text-slate-500">
                   Click on Add Notice to create your first announcement.
                 </p>
@@ -95,6 +114,7 @@ export default function NoticeBoardPage() {
                   <NoticeCard
                     key={notice.id}
                     notice={notice}
+                    onDelete={handleDeleteClick}
                   />
                 ))}
               </div>
@@ -102,6 +122,14 @@ export default function NoticeBoardPage() {
           </section>
         </div>
       </main>
+
+      <ConfirmDialog
+        isOpen={deleteId !== null}
+        title="Delete Notice"
+        message="Are you sure you want to delete this notice? This action cannot be undone."
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setDeleteId(null)}
+      />
     </>
   );
 }

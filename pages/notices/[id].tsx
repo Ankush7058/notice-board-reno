@@ -14,7 +14,13 @@ export default function EditNotice() {
   useEffect(() => {
     if (!id) return;
     
-    fetchNotice(id as string)
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+      router.push('/');
+      return;
+    }
+    
+    fetchNotice(numericId.toString())
       .then(data => setNotice(data))
       .catch(err => {
         console.error(err);

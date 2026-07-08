@@ -3,7 +3,7 @@ import { Notice } from '@/types/notice';
 
 interface NoticeCardProps {
   notice: Notice;
-  onDelete: (id: string) => void;
+   onDelete: (id: number) => void;
 }
 
 export default function NoticeCard({ notice, onDelete }: NoticeCardProps) {
