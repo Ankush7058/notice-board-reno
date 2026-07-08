@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 import { validateNotice } from '@/lib/validation';
 import formidable from 'formidable';
+import cloudinary from '@/lib/cloudinary';
 import fs from 'fs';
-import path from 'path';
 
 export const config = {
   api: {
@@ -12,13 +12,7 @@ export const config = {
 };
 
 function parseForm(req: NextApiRequest): Promise<{ fields: formidable.Fields; files: formidable.Files }> {
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-
   const form = formidable({
-    uploadDir,
     keepExtensions: true,
     maxFileSize: 5 * 1024 * 1024,
   });
@@ -41,8 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           publishDate DESC
       `;
       return res.status(200).json(notices);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return res.status(500).json({ message: 'Failed to fetch notices' });
     }
   }
@@ -66,8 +59,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const imageFile = files.image;
       if (imageFile) {
         const file = Array.isArray(imageFile) ? imageFile[0] : imageFile;
-        const filename = path.basename(file.filepath);
-        imageUrl = `/uploads/${filename}`;
+        // Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(file.filepath, {
+          folder: 'notice-board',
+        });
+        imageUrl = result.secure_url;
+        // Clean up temp file
+        fs.unlinkSync(file.filepath);
       }
 
       const notice = await prisma.notice.create({
@@ -82,8 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       return res.status(201).json(notice);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return res.status(500).json({ message: 'Failed to create notice' });
     }
   }
