@@ -82,11 +82,12 @@ export default function NoticeForm({ notice, isEdit = false }: NoticeFormProps) 
         await createNotice(data);
       }
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+  } catch (err) {
+  const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+  setError(errorMessage);
+} finally {
+  setLoading(false);
+}
   };
 
   return (
