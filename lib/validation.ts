@@ -1,6 +1,10 @@
-import { NoticeFormData } from '@/types/notice';
-
-export function validateNotice(data: Partial<NoticeFormData>): { valid: boolean; errors: string[] } {
+export function validateNotice(data: {
+  title?: string;
+  body?: string;
+  category?: string;
+  priority?: string;
+  publishDate?: string;
+}): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
   if (!data.title || data.title.trim().length === 0) {
